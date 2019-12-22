@@ -4,6 +4,7 @@ namespace EFCodeFirstExistingDatabase.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Collections.ObjectModel;
 
     internal sealed class Configuration : DbMigrationsConfiguration<EFCodeFirstExistingDatabase.PlutoContext>
     {
@@ -18,6 +19,16 @@ namespace EFCodeFirstExistingDatabase.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+            context.Authors.AddOrUpdate(a => a.Name,
+                new Author // Object initializer
+                {
+                    Name = "Author 1",
+                    Courses = new Collection<Course>() // Collection initializer
+                    {
+                        new Course() { Name = "Course by Author 1", Description = "Description 1" }
+                    }
+                });
         }
     }
 }
